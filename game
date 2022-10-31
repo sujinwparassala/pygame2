@@ -1,0 +1,63 @@
+import pygame
+from pygame.locals import *
+from pygame import mixer
+
+pygame.init()
+
+# window attributes
+width = 750
+height = 750
+window = pygame.display.set_mode((width, height))
+bg_img = pygame.image.load('C:\\aaaa\\WEB SITE\\game_background.jpg')
+bg_img = pygame.transform.scale(bg_img, (width, height))
+
+# square attributes
+x = y = 50
+color = "red"
+
+# music addition
+mixer.init()
+mixer.music.load('C:\\aaaa\\New folder\\audio.mp3')
+pygame.mixer.music.set_volume(0.05)
+mixer.music.play()
+i = 0
+# the running loop
+runing = True
+while runing:
+
+    # add background img
+    window.blit(bg_img, (0, 0))
+
+    window.blit(bg_img, (i, 0))
+    window.blit(bg_img, (width + i, 0))
+    if (i == -width):
+        window.blit(bg_img, (width + i, 0))
+        i = 0
+    i-= 0.5
+
+    # handling events
+    for event in pygame.event.get():
+        # closing window function
+        if event.type == QUIT:
+            runing = False
+
+    # add the square
+    pygame.draw.rect(window, color, pygame.Rect(x, y, 60, 60))
+
+
+    # moving square on pressing keys
+    key = pygame.key.get_pressed()
+    if key[pygame.K_UP]:
+        y -= 1
+    if key[pygame.K_DOWN]:
+        y += 1
+    if key[pygame.K_LEFT]:
+        x -= 1
+    if key[pygame.K_RIGHT]:
+        x += 1
+
+    # update display
+    pygame.display.update()
+
+# quit pygame
+pygame.quit()
